@@ -1,11 +1,14 @@
 require('dotenv').config();
 
-// Konfigurasi awal Google Gemini API
-// Integrasi API aktif dan panggilan model akan diaktifkan pada tahap selanjutnya.
+// Konfigurasi Google Gemini API (hanya dipakai di sisi server).
 const geminiConfig = {
-  apiKey: process.env.GEMINI_API_KEY || '',
-  model: 'gemini-1.5-flash',
-  isConfigured: () => Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() !== ''),
+  apiKey: (process.env.GEMINI_API_KEY || '').trim(),
+  model: (process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite').trim(),
+  fallbackModels: (process.env.GEMINI_FALLBACK_MODELS || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite')
+    .split(',')
+    .map((model) => model.trim())
+    .filter(Boolean),
+  isConfigured: () => Boolean((process.env.GEMINI_API_KEY || '').trim())
 };
 
 module.exports = geminiConfig;
