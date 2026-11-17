@@ -1,0 +1,105 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="flex-grow py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <% if (dbError) { %>
+      <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
+        Gagal mengambil data anggota dari database. Silakan periksa koneksi PostgreSQL dan coba lagi.
+      </div>
+    <% } %>
+    
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-200 pb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold mb-3">
+          Struktur & Anggota
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Daftar Anggota Kelas
+        </h1>
+        <p class="text-slate-600 mt-2 text-base">
+          Mengenal susunan pengurus dan mahasiswa berdedikasi di kelas <%= title.replace(' - CLASSHUB', '') %>.
+        </p>
+      </div>
+
+      <!-- Quick Counter Badge -->
+      <div class="flex items-center gap-3 bg-white p-3 px-5 rounded-2xl border border-slate-200 shadow-sm self-start md:self-auto">
+        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold text-slate-900 block leading-tight"><%= totalCount %></span>
+          <span class="text-xs text-slate-500 font-medium">Anggota Terdaftar</span>
+        </div>
+      </div>
+    </div>
+
+    <% if (members.length === 0) { %>
+      <div class="bg-white rounded-2xl p-10 border border-slate-200/80 shadow-sm text-center">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">Belum Ada Data Anggota</h2>
+        <p class="text-slate-600 text-sm">
+          Tabel <span class="font-mono text-slate-800">members</span> masih kosong. Jalankan
+          <span class="font-mono text-slate-800">npm run db:init</span> untuk mengisi data awal.
+        </p>
+      </div>
+    <% } else { %>
+    <!-- Members Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <% members.forEach(member => { %>
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm hover:shadow-md hover:border-brand-300 transition-all flex flex-col group">
+          
+          <!-- Avatar + Role Tag -->
+          <div class="relative mb-4 text-center">
+            <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-white shadow-md ring-2 ring-brand-100 group-hover:ring-brand-400 transition-all">
+              <img src="<%= member.avatar %>" alt="<%= member.name %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            </div>
+            <% if (member.featured) { %>
+              <span class="absolute bottom-0 right-1/2 translate-x-10 translate-y-1 bg-amber-400 text-slate-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-white shadow-sm">
+                Inti
+              </span>
+            <% } %>
+          </div>
+
+          <!-- Member Details -->
+          <div class="text-center flex-grow flex flex-col">
+            <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-600 transition-colors">
+              <%= member.name %>
+            </h3>
+            
+            <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full mx-auto mt-2 inline-block border border-brand-100">
+              <%= member.role %>
+            </span>
+
+            <p class="text-[11px] text-slate-500 font-mono mt-1">
+              NIM: <%= member.nim %>
+            </p>
+
+            <p class="text-xs text-slate-500 italic mt-3 mb-4 flex-grow line-clamp-2 px-2">
+              "<%= member.quote %>"
+            </p>
+
+            <!-- Department info -->
+            <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+              Bidang: <%= member.department %>
+            </div>
+          </div>
+
+        </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <!-- Sumber Data -->
+    <div class="p-4 rounded-xl bg-slate-100/80 border border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+      <span>* Data anggota di atas diambil secara dinamis dari tabel PostgreSQL.</span>
+      <span class="font-medium text-slate-700 hidden sm:inline">Sumber: members</span>
+    </div>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,26 @@
+/* CLASSHUB Custom Utilities */
+
+/* Sembunyikan scrollbar untuk kategori pills */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Halus transisi animasi */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chat bubble animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble-animate {
+  animation: fadeIn 0.25s ease-out forwards;
+}

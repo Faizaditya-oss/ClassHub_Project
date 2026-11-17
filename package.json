@@ -1,0 +1,31 @@
+{
+  "name": "classhub",
+  "version": "1.0.0",
+  "description": "CLASSHUB - Website Profil dan Informasi Kelas Berbasis Artificial Intelligence",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "db:init": "node database/init.js"
+  },
+  "keywords": [
+    "classhub",
+    "express",
+    "ejs",
+    "tailwind",
+    "mvc",
+    "postgresql",
+    "gemini"
+  ],
+  "author": "CLASSHUB Developer",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
